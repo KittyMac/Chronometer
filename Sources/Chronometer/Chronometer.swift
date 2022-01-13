@@ -81,11 +81,16 @@ public extension String {
             if match.numberOfRanges > 3 {
                 let timeRange = match.range(at: 3)
                 if timeRange.location != NSNotFound {
-                    let separator = match.range(at: 2).length == 1 ? "'T'" : " "
-                    for format in isoTimes {
-                        if format.1.firstMatch(in: self, options: [], range: timeRange) != nil {
-                            timeFormat = separator + format.0
-                            break
+                    if let separatorRange = Range(match.range(at: 2), in: self) {
+                        var separatorString = String(self[separatorRange])
+                        if separatorString != " " {
+                            separatorString = "'\(separatorString)'"
+                        }
+                        for format in isoTimes {
+                            if format.1.firstMatch(in: self, options: [], range: timeRange) != nil {
+                                timeFormat = separatorString + format.0
+                                break
+                            }
                         }
                     }
                 }
