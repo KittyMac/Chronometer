@@ -24,6 +24,6 @@ docker:
 	-docker buildx use cluster
 	-docker buildx inspect --bootstrap
 	-docker login
-	docker buildx build --platform linux/amd64,linux/arm64/v8 --push -t kittymac/Chronometer .
+	docker buildx build --platform linux/amd64,linux/arm64/v8 --push -t kittymac/chronometer .
 	
 #linux/arm/v7

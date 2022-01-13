@@ -60,12 +60,12 @@ public extension String {
 
         let parseIso8601: () -> Date? = {
 
-            var match = extendedIsoRegex.matches(in: self, options: [], range: dateStringRange).first
-            if match == nil {
-                match = basicIsoRegex.matches(in: self, options: [], range: dateStringRange).first
+            var fullMatch = extendedIsoRegex.matches(in: self, options: [], range: dateStringRange).first
+            if fullMatch == nil {
+                fullMatch = basicIsoRegex.matches(in: self, options: [], range: dateStringRange).first
             }
 
-            guard let match = match else { return nil }
+            guard let match = fullMatch else { return nil }
 
             var dateFormat = ""
             for format in isoDates {
@@ -108,7 +108,6 @@ public extension String {
 
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "\(dateFormat)\(timeFormat)\(tzFormat)"
-
             return dateFormatter.date(from: self)
         }
 

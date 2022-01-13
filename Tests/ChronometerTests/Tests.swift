@@ -24,8 +24,9 @@ class ChronometerTests: TestsBase {
         return lhs == rhs
     }
     
-    
+        
     func testISO8061() {
+        
         XCTAssert(compareFormat("yyyy-MM-dd HH:mm:ss.SSSZZZZZ"))
         XCTAssert(compareFormat("Y-'W'ww-e HH:mm:ss.SSSZZZZZ"))
         XCTAssert(compareFormat("yyyy-D HH:mm:ss.SSSZZZZZ"))
@@ -49,6 +50,14 @@ class ChronometerTests: TestsBase {
         XCTAssert(compareFormat("yyyyMMdd'T'HH:mm:ss"))
         XCTAssert(compareFormat("Y'W'wwe'T'HH:mm:ss"))
         XCTAssert(compareFormat("yyyyDDD'T'HH:mm:ss"))
+        
+        XCTAssert(compareFormat("yyyy-MM-dd HH:mm:ss"))
+        XCTAssert(compareFormat("Y-'W'ww-e HH:mm:ss"))
+        XCTAssert(compareFormat("yyyy-D HH:mm:ss"))
+        XCTAssert(compareFormat("yyyy-DDD HH:mm:ss"))
+        XCTAssert(compareFormat("yyyyMMdd HH:mm:ss"))
+        XCTAssert(compareFormat("Y'W'wwe HH:mm:ss"))
+        XCTAssert(compareFormat("yyyyDDD HH:mm:ss"))
         
         XCTAssert(compareFormat("yyyy-MM-dd'T'HH:mm"))
         XCTAssert(compareFormat("Y-'W'ww-e'T'HH:mm"))
