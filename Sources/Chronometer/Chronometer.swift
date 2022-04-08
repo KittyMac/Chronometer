@@ -54,6 +54,47 @@ private let obsOffsets = [
     "PST": -8 * 60
 ]
 
+
+fileprivate var allDateFormats = [DateFormatter]()
+fileprivate func initDateFormats() {
+    guard allDateFormats.count == 0 else { return }
+        
+    let formats = [
+        "MM/dd/yyyy",
+        "M/d/yyyy",
+        "MM/dd/yy",
+        "M/d/yy",
+        "H:mm A",
+        "HH:mm",
+        "MM/dd/yyyy HH:mm:ss",
+        "MM/dd/yyyy h:mm a",
+        "MM/dd/yyyy h:mma",
+        "M/d/yyyy h:mm a",
+        "M/d/yyyy h:mma",
+        "MMMM dd, yyyy",
+        "MMMM d, yyyy h:mm a",
+        "MMMM d, yyyy h:mma",
+        "MMMM d, yyyy",
+        "MMM dd, yyyy",
+        "MMM d, yyyy, h:mm a",
+        "MMM d, yyyy, h:mma",
+        "MMM d, yyyy",
+        "MM-dd-yy",
+        "M-d-yy",
+        "MM-dd-yyyy",
+        "M-d-yyyy"
+    ]
+    
+    formats.forEach { format in
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        allDateFormats.append(formatter)
+    }
+    
+}
+
+
+
 public extension String {
     func date() -> Date? {
         let dateStringRange = NSRange(location: 0, length: self.count)
@@ -110,8 +151,20 @@ public extension String {
             dateFormatter.dateFormat = "\(dateFormat)\(timeFormat)\(tzFormat)"
             return dateFormatter.date(from: self)
         }
-
-        return parseIso8601()
+        
+        if let date = parseIso8601() {
+            return date
+        }
+        
+        initDateFormats()
+        for formatter in allDateFormats {
+            if let date = formatter.date(from: self) {
+                return date
+            }
+        }
+        
+        
+        return nil
     }
 
 }
