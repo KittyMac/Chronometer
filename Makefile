@@ -16,7 +16,7 @@ update:
 
 xcode:
 	swift package generate-xcodeproj
-	meta/addBuildPhase Chronometer.xcodeproj/project.pbxproj 'Chronometer::Chronometer' 'cd $${SRCROOT}; ./meta/CombinedBuildPhases.sh'
+	meta/addBuildPhase ChronometerKit.xcodeproj/project.pbxproj 'ChronometerKit::ChronometerKit' 'cd $${SRCROOT}; ./meta/CombinedBuildPhases.sh'
 
 docker:
 	-DOCKER_HOST=tcp://192.168.1.209:2376 docker buildx create --name cluster --platform linux/arm64/v8 --append
