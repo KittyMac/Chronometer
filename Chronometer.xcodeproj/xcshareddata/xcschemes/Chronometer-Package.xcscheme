@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ChronometerKit::ChronometerKit"
-               BuildableName = "ChronometerKit.framework"
-               BlueprintName = "ChronometerKit"
-               ReferencedContainer = "container:ChronometerKit.xcodeproj">
+               BlueprintIdentifier = "chronometer::Chronometer"
+               BuildableName = "Chronometer.framework"
+               BlueprintName = "Chronometer"
+               ReferencedContainer = "container:Chronometer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ChronometerKit::ChronometerTests"
+               BlueprintIdentifier = "chronometer::ChronometerTests"
                BuildableName = "ChronometerTests.xctest"
                BlueprintName = "ChronometerTests"
-               ReferencedContainer = "container:ChronometerKit.xcodeproj">
+               ReferencedContainer = "container:Chronometer.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

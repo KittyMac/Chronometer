@@ -3,21 +3,21 @@
 import PackageDescription
 
 let package = Package(
-    name: "ChronometerKit",
+    name: "Chronometer",
     platforms: [
         .macOS(.v10_13), .iOS(.v11)
     ],
     products: [
-        .library(name: "ChronometerKit", targets: ["ChronometerKit"])
+        .library(name: "Chronometer", targets: ["Chronometer"])
     ],
     dependencies: [
     ],
     targets: [
         .target(
-            name: "ChronometerKit",
+            name: "Chronometer",
             dependencies: []),
         .testTarget(
             name: "ChronometerTests",
-            dependencies: ["ChronometerKit"]),
+            dependencies: ["Chronometer"]),
     ]
 )
