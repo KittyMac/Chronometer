@@ -34,6 +34,11 @@ class ChronometerTests: TestsBase {
         let date2 = sample2.date()
         XCTAssertNotNil(date2)
         print(date2)
+        
+        let sample3 = "Sat Aug 13 2022 13:12:43 GMT-0900 (EDT)"
+        let date3 = sample3.date()
+        XCTAssertNotNil(date3)
+        print(date3)
     }
     
     func testMisc() {

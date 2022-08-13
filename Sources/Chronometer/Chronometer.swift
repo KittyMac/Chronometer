@@ -164,8 +164,15 @@ public extension String {
         }
         
         initDateFormats()
+        
+        var dateString = self
+        if self.contains("GMT") {
+            dateString = self.replacingOccurrences(of: "GMT", with: "")
+            dateString = String(dateString.split(separator: "(")[0])
+        }
+        
         for formatter in allDateFormats {
-            if let date = formatter.date(from: self) {
+            if let date = formatter.date(from: dateString) {
                 return date
             }
         }
