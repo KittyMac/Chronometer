@@ -58,8 +58,15 @@ private let obsOffsets = [
 fileprivate var allDateFormats = [DateFormatter]()
 fileprivate func initDateFormats() {
     guard allDateFormats.count == 0 else { return }
+    
+    // javascript uses Sat Aug 13 2022 12:53:29 GMT-0400 (EDT)
+    // https://nsdateformatter.com
         
     let formats = [
+        "E MMM d yyyy HH:mm:ss Z",
+        "E MMM dd yyyy HH:mm:ss Z",
+        "E MMM d yyyy HH:mm:ss",
+        "E MMM dd yyyy HH:mm:ss",
         "MM/dd/yyyy",
         "M/d/yyyy",
         "MM/dd/yy",

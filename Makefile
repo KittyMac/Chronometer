@@ -1,7 +1,6 @@
 SWIFT_BUILD_FLAGS=--configuration release
 
 build:
-	./meta/CombinedBuildPhases.sh
 	swift build -v $(SWIFT_BUILD_FLAGS)
 
 clean:
@@ -14,16 +13,11 @@ test:
 update:
 	swift package update
 
-xcode:
-	swift package generate-xcodeproj
-	meta/addBuildPhase Chronometer.xcodeproj/project.pbxproj 'Chronometer::Chronometer' 'cd $${SRCROOT}; ./meta/CombinedBuildPhases.sh'
-
 docker:
-	-DOCKER_HOST=tcp://192.168.1.209:2376 docker buildx create --name cluster --platform linux/arm64/v8 --append
-	-DOCKER_HOST=tcp://192.168.1.198:2376 docker buildx create --name cluster --platform linux/amd64 --append
-	-docker buildx use cluster
+	-docker buildx create --name local_builder
+	-DOCKER_HOST=tcp://192.168.1.198:2376 docker buildx create --name local_builder --platform linux/amd64 --append
+	-docker buildx use local_builder
 	-docker buildx inspect --bootstrap
 	-docker login
-	docker buildx build --platform linux/amd64,linux/arm64/v8 --push -t kittymac/chronometer .
+	docker buildx build --platform linux/amd64,linux/arm64 --push -t kittymac/spanker .
 	
-#linux/arm/v7

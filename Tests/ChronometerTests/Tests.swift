@@ -24,6 +24,18 @@ class ChronometerTests: TestsBase {
         return lhs == rhs
     }
     
+    func testJavascript() {
+        let sample = "Sat Aug 13 2022 12:53:29"
+        let date = sample.date()
+        XCTAssertNotNil(date)
+        print(date)
+        
+        let sample2 = "Sat Aug 13 2022 11:53:29 -0900"
+        let date2 = sample2.date()
+        XCTAssertNotNil(date2)
+        print(date2)
+    }
+    
     func testMisc() {
         XCTAssert(compareFormat("MM/dd/yyyy"))
         XCTAssert(compareFormat("M/d/yyyy"))
