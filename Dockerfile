@@ -1,16 +1,20 @@
-FROM swiftarm/swift:5.5.2-ubuntu-bionic as builder
+FROM swiftarm/swift:5.6.2-ubuntu-focal as builder
 
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true && apt-get -q update && \
-    apt-get -q install -y \
+    apt-get install -y \
     libpq-dev \
     libpng-dev \
-    libjpeg-dev
+    libjpeg-dev \
+    libjavascriptcoregtk-4.0-dev \
+    libatomic1
+
 RUN rm -rf /var/lib/apt/lists/*
+
 
 WORKDIR /root/Chronometer
 COPY ./Makefile ./Makefile
+COPY ./Package.resolved ./Package.resolved
 COPY ./Package.swift ./Package.swift
-COPY ./meta ./meta
 COPY ./Sources ./Sources
 COPY ./Tests ./Tests
 
