@@ -1,4 +1,4 @@
-FROM swiftarm/swift:5.6.2-ubuntu-focal as builder
+FROM swift:5.7.1-focal as builder
 
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true && apt-get -q update && \
     apt-get install -y \
@@ -13,7 +13,6 @@ RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root/Chronometer
 COPY ./Makefile ./Makefile
-COPY ./Package.resolved ./Package.resolved
 COPY ./Package.swift ./Package.swift
 COPY ./Sources ./Sources
 COPY ./Tests ./Tests

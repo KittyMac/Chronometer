@@ -8,7 +8,8 @@ let package = Package(
         .macOS(.v10_13), .iOS(.v11)
     ],
     products: [
-        .library(name: "Chronometer", type: .dynamic, targets: ["Chronometer"])
+        .library(name: "Chronometer", targets: ["Chronometer"]),
+        .library(name: "ChronometerLib", type: .dynamic, targets: ["Chronometer"])
     ],
     dependencies: [
     ],
