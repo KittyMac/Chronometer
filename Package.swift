@@ -9,7 +9,6 @@ let package = Package(
     ],
     products: [
         .library(name: "Chronometer", targets: ["Chronometer"]),
-        .library(name: "ChronometerLib", type: .dynamic, targets: ["Chronometer"])
     ],
     dependencies: [
     ],
