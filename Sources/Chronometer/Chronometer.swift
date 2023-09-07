@@ -89,7 +89,9 @@ fileprivate func initDateFormats() {
         "MM-dd-yy",
         "M-d-yy",
         "MM-dd-yyyy",
-        "M-d-yyyy"
+        "M-d-yyyy",
+        // Support for Swift date description format
+        "yyyy-MM-dd HH:mm:ss Z"
     ]
     
     formats.forEach { format in
