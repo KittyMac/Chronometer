@@ -75,7 +75,6 @@ class ChronometerTests: TestsBase {
         XCTAssert(compareFormat("M-d-yyyy"))
         XCTAssert(compareFormat("MM/dd/yyyy"))
     }
-    
         
     func testISO8061() {
         
@@ -132,5 +131,12 @@ class ChronometerTests: TestsBase {
         XCTAssert(compareFormat("Y'W'ww"))
         XCTAssert(compareFormat("yyyyMM"))
         XCTAssert(compareFormat("yyyy"))
+    }
+    
+    func testAppleDateDescription() {
+        let date = "1/1/2021".date()!
+        
+        XCTAssertNotNil(date.description.date())
+        XCTAssertEqual(date, date.description.date())
     }
 }

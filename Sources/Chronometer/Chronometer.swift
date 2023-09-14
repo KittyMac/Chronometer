@@ -105,7 +105,8 @@ fileprivate func initDateFormats() {
         ("MM-dd-yy", { s in return s.count == 8 }),
         ("M-d-yy", { s in return s.count <= 8 }),
         ("MM-dd-yyyy", { s in return s.count == 10 }),
-        ("M-d-yyyy", { s in return s.count <= 10 })
+        ("M-d-yyyy", { s in return s.count <= 10 }),
+        ("yyyy-MM-dd HH:mm:ss Z", { s in return s.count >= 16 })
     ]
     
     formats.forEach { format in
