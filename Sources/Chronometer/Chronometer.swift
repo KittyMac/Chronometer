@@ -54,48 +54,62 @@ private let obsOffsets = [
     "PST": -8 * 60
 ]
 
+struct DateFormat {
+    let formatter: DateFormatter
+    let verify: (String) -> Bool
+    
+    func date(from: String) -> Date? {
+        guard verify(from) else { return nil }
+        return formatter.date(from: from)
+    }
+    
+    init(format: String, verify: @escaping (String) -> Bool) {
+        formatter = DateFormatter()
+        formatter.dateFormat = format
+        self.verify = verify
+    }
+}
 
-fileprivate var allDateFormats = [DateFormatter]()
+fileprivate var allDateFormats = [DateFormat]()
 fileprivate func initDateFormats() {
     guard allDateFormats.count == 0 else { return }
     
     // javascript uses Sat Aug 13 2022 12:53:29 GMT-0400 (EDT)
     // https://nsdateformatter.com
-        
-    let formats = [
-        "E MMM d yyyy HH:mm:ss Z",
-        "E MMM dd yyyy HH:mm:ss Z",
-        "E MMM d yyyy HH:mm:ss",
-        "E MMM dd yyyy HH:mm:ss",
-        "MM/dd/yyyy",
-        "M/d/yyyy",
-        "MM/dd/yy",
-        "M/d/yy",
-        "H:mm A",
-        "HH:mm",
-        "MM/dd/yyyy HH:mm:ss",
-        "MM/dd/yyyy h:mm a",
-        "MM/dd/yyyy h:mma",
-        "M/d/yyyy h:mm a",
-        "M/d/yyyy h:mma",
-        "MMMM dd, yyyy",
-        "MMMM d, yyyy h:mm a",
-        "MMMM d, yyyy h:mma",
-        "MMMM d, yyyy",
-        "MMM dd, yyyy",
-        "MMM d, yyyy, h:mm a",
-        "MMM d, yyyy, h:mma",
-        "MMM d, yyyy",
-        "MM-dd-yy",
-        "M-d-yy",
-        "MM-dd-yyyy",
-        "M-d-yyyy"
+    
+    // second argument is a "performant sanity check the string matches the requirements of the formatter"
+    let formats: [(String, (String) -> Bool)] = [
+        ("E MMM d yyyy HH:mm:ss Z", { s in return s.count >= 16 }),
+        ("E MMM dd yyyy HH:mm:ss Z", { s in return s.count >= 16 }),
+        ("E MMM d yyyy HH:mm:ss", { s in return s.count >= 16 }),
+        ("E MMM dd yyyy HH:mm:ss", { s in return s.count >= 16 }),
+        ("MM/dd/yyyy", { s in return s.count == 10 }),
+        ("M/d/yyyy", { s in return s.count >= 8 && s.count <= 10 }),
+        ("MM/dd/yy", { s in return s.count == 8 }),
+        ("M/d/yy", { s in return s.count >= 6 && s.count <= 8 }),
+        ("H:mm A", { s in return s.count < 10 }),
+        ("HH:mm", { s in return s.count < 10 }),
+        ("MM/dd/yyyy HH:mm:ss", { s in return s.count == 19 }),
+        ("MM/dd/yyyy h:mm a", { s in return s.count > 11 }),
+        ("MM/dd/yyyy h:mma", { s in return s.count > 11 }),
+        ("M/d/yyyy h:mm a", { s in return s.count > 11 }),
+        ("M/d/yyyy h:mma", { s in return s.count > 11 }),
+        ("MMMM dd, yyyy", { s in return s.count > 11 }),
+        ("MMMM d, yyyy h:mm a", { s in return s.count > 11 }),
+        ("MMMM d, yyyy h:mma", { s in return s.count > 11 }),
+        ("MMMM d, yyyy", { s in return s.count > 11 }),
+        ("MMM dd, yyyy", { s in return s.count > 11 }),
+        ("MMM d, yyyy, h:mm a", { s in return s.count > 11 }),
+        ("MMM d, yyyy, h:mma", { s in return s.count > 11 }),
+        ("MMM d, yyyy", { s in return s.count > 9 }),
+        ("MM-dd-yy", { s in return s.count == 8 }),
+        ("M-d-yy", { s in return s.count <= 8 }),
+        ("MM-dd-yyyy", { s in return s.count == 10 }),
+        ("M-d-yyyy", { s in return s.count <= 10 })
     ]
     
     formats.forEach { format in
-        let formatter = DateFormatter()
-        formatter.dateFormat = format
-        allDateFormats.append(formatter)
+        allDateFormats.append(DateFormat(format: format.0, verify: format.1))
     }
     
 }

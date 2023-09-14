@@ -24,21 +24,31 @@ class ChronometerTests: TestsBase {
         return lhs == rhs
     }
     
+    func testPerformance() {
+        // average: 2.054
+        let sample = "09/13/2023 01:08:10"
+        measure {
+            for _ in 0..<10000 {
+                XCTAssertNotNil(sample.date())
+            }
+        }
+    }
+    
     func testJavascript() {
         let sample = "Sat Aug 13 2022 12:53:29"
         let date = sample.date()
         XCTAssertNotNil(date)
-        print(date)
+        print(date!)
         
         let sample2 = "Sat Aug 13 2022 11:53:29 -0900"
         let date2 = sample2.date()
         XCTAssertNotNil(date2)
-        print(date2)
+        print(date2!)
         
         let sample3 = "Sat Aug 13 2022 13:12:43 GMT-0900 (EDT)"
         let date3 = sample3.date()
         XCTAssertNotNil(date3)
-        print(date3)
+        print(date3!)
     }
     
     func testMisc() {
