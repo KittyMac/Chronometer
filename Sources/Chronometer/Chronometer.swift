@@ -83,12 +83,7 @@ fileprivate func initDateFormats() {
         ("E MMM dd yyyy HH:mm:ss Z", { s in return s.count >= 16 }),
         ("E MMM d yyyy HH:mm:ss", { s in return s.count >= 16 }),
         ("E MMM dd yyyy HH:mm:ss", { s in return s.count >= 16 }),
-        ("MM/dd/yyyy", { s in return s.count == 10 }),
-        ("M/d/yyyy", { s in return s.count >= 8 && s.count <= 10 }),
-        ("MM/dd/yy", { s in return s.count == 8 }),
-        ("M/d/yy", { s in return s.count >= 6 && s.count <= 8 }),
-        ("H:mm A", { s in return s.count < 10 }),
-        ("HH:mm", { s in return s.count < 10 }),
+        ("yyyy-MM-dd HH:mm:ss Z", { s in return s.count >= 16 }),
         ("MM/dd/yyyy HH:mm:ss", { s in return s.count == 19 }),
         ("MM/dd/yyyy h:mm a", { s in return s.count > 11 }),
         ("MM/dd/yyyy h:mma", { s in return s.count > 11 }),
@@ -106,7 +101,12 @@ fileprivate func initDateFormats() {
         ("M-d-yy", { s in return s.count <= 8 }),
         ("MM-dd-yyyy", { s in return s.count == 10 }),
         ("M-d-yyyy", { s in return s.count <= 10 }),
-        ("yyyy-MM-dd HH:mm:ss Z", { s in return s.count >= 16 })
+        ("MM/dd/yyyy", { s in return s.count == 10 }),
+        ("M/d/yyyy", { s in return s.count >= 8 && s.count <= 10 }),
+        ("MM/dd/yy", { s in return s.count == 8 }),
+        ("M/d/yy", { s in return s.count >= 6 && s.count <= 8 }),
+        ("H:mm A", { s in return s.count < 16 }),
+        ("HH:mm", { s in return s.count < 10 })
     ]
     
     formats.forEach { format in
