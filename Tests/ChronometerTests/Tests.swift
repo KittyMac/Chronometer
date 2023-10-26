@@ -141,4 +141,11 @@ class ChronometerTests: TestsBase {
         XCTAssertNotNil(date.description.date())
         XCTAssertEqual(date, date.description.date())
     }
+    
+    func testSimple0() {
+        let date = "2023-8-26".date()!
+        
+        XCTAssertNotNil(date.description.date())
+        XCTAssertEqual(date, date.description.date())
+    }
 }
