@@ -71,6 +71,7 @@ struct DateFormat {
 }
 
 fileprivate var allDateFormats = [DateFormat]()
+fileprivate var allDateFormatsLock = NSLock()
 fileprivate func initDateFormats() {
     guard allDateFormats.count == 0 else { return }
     
@@ -113,10 +114,9 @@ fileprivate func initDateFormats() {
         ("HH:mm", { s in return s.count < 10 })
     ]
     
-    formats.forEach { format in
+    for format in formats {
         allDateFormats.append(DateFormat(format: format.0, verify: format.1))
     }
-    
 }
 
 
@@ -182,20 +182,19 @@ public extension String {
             return date
         }
         
-        initDateFormats()
-        
         var dateString = self
         if self.contains("GMT") {
             dateString = self.replacingOccurrences(of: "GMT", with: "")
             dateString = String(dateString.split(separator: "(")[0])
         }
         
+        allDateFormatsLock.lock(); defer { allDateFormatsLock.unlock() }
+        initDateFormats()
         for formatter in allDateFormats {
             if let date = formatter.date(from: dateString) {
                 return date
             }
         }
-        
         
         return nil
     }
