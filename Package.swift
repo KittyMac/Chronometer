@@ -4,10 +4,6 @@ import PackageDescription
 
 let package = Package(
     name: "Chronometer",
-    platforms: [
-        .macOS(.v12),
-        .iOS(.v11)
-    ],
     products: [
         .library(name: "Chronometer", targets: ["Chronometer"]),
     ],
