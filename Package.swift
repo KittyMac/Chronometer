@@ -1,11 +1,12 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.5
 
 import PackageDescription
 
 let package = Package(
     name: "Chronometer",
     platforms: [
-        .macOS(.v10_13), .iOS(.v11)
+        .macOS(.v12),
+        .iOS(.v11)
     ],
     products: [
         .library(name: "Chronometer", targets: ["Chronometer"]),
