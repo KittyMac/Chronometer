@@ -54,6 +54,21 @@ private let obsOffsets = [
     "PST": -8 * 60
 ]
 
+// Formatters parsing machine-generated date strings must not inherit the
+// device's locale/calendar: a Buddhist, Japanese, Islamic or Persian calendar
+// (or a 12/24-hour override on Apple platforms) silently shifts or breaks
+// the parsed date. en_US_POSIX + Gregorian makes parsing deterministic.
+private let posixLocale = Locale(identifier: "en_US_POSIX")
+private let gregorianCalendar = Calendar(identifier: .gregorian)
+
+private func makeFixedFormatter(_ format: String) -> DateFormatter {
+    let formatter = DateFormatter()
+    formatter.locale = posixLocale
+    formatter.calendar = gregorianCalendar
+    formatter.dateFormat = format
+    return formatter
+}
+
 struct DateFormat {
     let formatter: DateFormatter
     let verify: (String) -> Bool
@@ -64,8 +79,7 @@ struct DateFormat {
     }
     
     init(format: String, verify: @escaping (String) -> Bool) {
-        formatter = DateFormatter()
-        formatter.dateFormat = format
+        formatter = makeFixedFormatter(format)
         self.verify = verify
     }
 }
@@ -173,8 +187,7 @@ public extension String {
                 }
             }
 
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "\(dateFormat)\(timeFormat)\(tzFormat)"
+            let dateFormatter = makeFixedFormatter("\(dateFormat)\(timeFormat)\(tzFormat)")
             return dateFormatter.date(from: self)
         }
         

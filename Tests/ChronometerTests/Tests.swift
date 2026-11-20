@@ -9,6 +9,8 @@ class ChronometerTests: TestsBase {
         let now = Date()
         
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
         dateFormatter.dateFormat = format
 
         // The date string when the format is known
@@ -147,5 +149,31 @@ class ChronometerTests: TestsBase {
         
         XCTAssertNotNil(date.description.date())
         XCTAssertEqual(date, date.description.date())
+    }
+    
+    func testTimeZoneOffsets() {
+        // Explicit fixtures: the compareFormat ZZZZZ tests only emit a colon
+        // offset when the runner's local zone isn't UTC (ZZZZZ prints "Z" for UTC),
+        // so on a UTC CI box the colon-offset path would otherwise go untested.
+        let reference = "2024-05-01T10:34:56Z".date()
+        XCTAssertNotNil(reference)
+        
+        let equivalents = [
+            "2024-05-01T12:34:56+02:00",
+            "2024-05-01T12:34:56+0200",
+            "2024-05-01T12:34:56+02",
+            "2024-05-01 12:34:56+02:00",
+            "2024-05-01 12:34:56 +02:00",
+            "2024-05-01 12:34:56 +0200",
+            "2024-05-01T05:34:56-05:00",
+            "2024-05-01T10:34:56+00:00"
+        ]
+        for sample in equivalents {
+            XCTAssertEqual(sample.date(), reference, sample)
+        }
+        
+        let fractional = "2024-05-01T12:34:56.250+02:00".date()
+        XCTAssertNotNil(fractional)
+        XCTAssertEqual(fractional!.timeIntervalSince(reference!), 0.25, accuracy: 0.001)
     }
 }
